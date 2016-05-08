@@ -4,11 +4,9 @@ using System.Text;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-using NUnit.Framework;
 
 namespace BelatrixExercice
 {
-    [TestFixture]
     public class JobLogger
     {
         private static bool _logToFile;
@@ -18,6 +16,16 @@ namespace BelatrixExercice
         private static bool _logError;
         private static bool _logToDatabase;
         private bool _initialized; // unused
+
+        public JobLogger()
+        {
+            _logError = false;
+            _logMessage = false;
+            _logWarning = false;
+            _logToDatabase = false;
+            _logToFile = false;
+            _logToConsole = false;
+        }
 
         public JobLogger (bool logToFile, bool logToConsole, bool logToDatabase, bool logMessage, bool logWarning, bool logError)
         {
@@ -29,7 +37,6 @@ namespace BelatrixExercice
             _logToConsole = logToConsole;
         }
 
-        [Test]
         public static void LogMessage (string message, bool isMessage, bool isWarning, bool isError)
         {
             if (string.IsNullOrEmpty(message))
