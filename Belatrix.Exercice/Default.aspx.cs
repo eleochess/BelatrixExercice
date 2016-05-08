@@ -12,6 +12,8 @@ namespace Belatrix.Exercice
 
         protected void btnLog_Click(object sender, EventArgs e)
         {
+            lblMessage.Text = string.Empty;
+
             bool logToDatabase = ckLogToDatabase.Checked;
             bool logToTextfile = ckLogToTextfile.Checked;
             bool logToConsole = ckLogToConsole.Checked;
@@ -22,11 +24,6 @@ namespace Belatrix.Exercice
 
             try
             {
-                if (!logToDatabase && !logToTextfile && !logToConsole)
-                {
-                    throw new Exception("No log registered.");
-                }
-
                 if (logMessage) JobLogger.LogMessage(txtMessage.Text, logToDatabase, logToTextfile, logToConsole);
                 else if (logWarning) JobLogger.LogWarning(txtMessage.Text, logToDatabase, logToTextfile, logToConsole);
                 else if (logError) JobLogger.LogError(txtMessage.Text, logToDatabase, logToTextfile, logToConsole);

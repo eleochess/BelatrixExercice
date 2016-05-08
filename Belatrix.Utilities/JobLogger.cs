@@ -11,30 +11,40 @@ namespace Belatrix.Utilities
     {
         private enum LogType { Message = 1, Warning = 2, Error = 3 }
 
-        public static void LogMessage(string message, bool logToDatabase, bool logToTextfile, bool logToConsole)
+        public static bool LogMessage(string message, bool logToDatabase, bool logToTextfile, bool logToConsole)
         {
-            Log(message, LogType.Message, logToDatabase, logToTextfile, logToConsole);
+            return Log(message, LogType.Message, logToDatabase, logToTextfile, logToConsole);
         }
 
-        public static void LogWarning(string message, bool logToDatabase, bool logToTextfile, bool logToConsole)
+        public static bool LogWarning(string message, bool logToDatabase, bool logToTextfile, bool logToConsole)
         {
-            Log(message, LogType.Warning, logToDatabase, logToTextfile, logToConsole);
+            return Log(message, LogType.Warning, logToDatabase, logToTextfile, logToConsole);
         }
 
-        public static void LogError(string message, bool logToDatabase, bool logToTextfile, bool logToConsole)
+        public static bool LogError(string message, bool logToDatabase, bool logToTextfile, bool logToConsole)
         {
-            Log(message, LogType.Error, logToDatabase, logToTextfile, logToConsole);
+            return Log(message, LogType.Error, logToDatabase, logToTextfile, logToConsole);
         }
 
-        private static void Log(string message, LogType type, bool logToDatabase, bool logToTextfile, bool logToConsole)
+        private static bool Log(string message, LogType type, bool logToDatabase, bool logToTextfile, bool logToConsole)
         {
-            if (string.IsNullOrEmpty(message)) message = "[Empty message]"; else message.Trim();
+            bool result = false;
+
+            if (string.IsNullOrWhiteSpace(message)) { throw new Exception("The log message is not defined."); }
+
+            if (!logToDatabase && !logToTextfile && !logToConsole) { throw new Exception("No log registered."); }
+
+            message.Trim();
 
             if (logToDatabase) { LogToDatabase(message, type); }
 
             if (logToTextfile) { LogToTextfile(message, type); }
 
             if (logToConsole) { LogToConsole(message, type); }
+
+            result = true;
+
+            return result;
         }
 
         private static void LogToDatabase(string message, LogType type)
