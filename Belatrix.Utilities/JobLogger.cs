@@ -65,7 +65,7 @@ namespace Belatrix.Utilities
             }
             catch
             {
-                throw new Exception("Error en la conexión con la base de datos.");
+                throw new Exception("Database connection failure.");
             }
         }
 
@@ -84,7 +84,7 @@ namespace Belatrix.Utilities
             }
             catch
             {
-                throw new Exception("Error en la ubicación del archivo log de text");
+                throw new Exception("Unrecognized path of the Log text file.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Belatrix.Utilities
             }
             catch
             {
-                throw new Exception("Error en el registro del Log vía Consola.");
+                throw new Exception("Console log registration failure.");
             }
         }
     }
